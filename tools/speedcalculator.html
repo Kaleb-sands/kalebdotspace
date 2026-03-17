@@ -6,6 +6,7 @@
     <title>Area Calculator</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link rel="icon" type="image/gif/png" href="../../icon.png ">
     <script src='main.js'></script>
 </head>
 <style>
@@ -37,7 +38,7 @@ margin: 8px 6px;
 }
 body{
 background: rgb(125, 192, 255); 
-margin: 10px;
+margin: 0px;
 padding: 0;
 color: black;
 }
@@ -78,6 +79,8 @@ padding-right: 0px;
 p{
     margin-top: 10px;
     margin-bottom: 10px;
+}main{
+    margin-left: 10px;
 }
 </style>
 <script type="text/javascript">
@@ -99,11 +102,13 @@ p{
     <nav>
 		<h1 class="Nav">Speed Calculator</h1>
 	</nav>
+    <main class="container">
     <p>Welcome to the Speed Calculator. This calculates the top speed of a vehicle based off of the parameters below. Calculation:</p>
     <p>RPM of wheel = RPM / ratio of Sprocket to Clutch</p>
     <p>Inches per minute = RPM of wheel * circumfrence of wheel (diameter * pi)</p>
     <p>Speed in miles per hour = (Inches per minute * 60 minutes) / Inches in a mile (63360)</p>
     <p>Start calculating below:</p>
+    
     <form>
         <input id="diameter" type="text" placeholder="Wheel Diameter"><br/>
     </form>
@@ -120,5 +125,6 @@ p{
     <form>
         <input id="answer" type="text" placeholder="Miles Per Hour"><br/>
     </form>
+    </main>
 </body>
 </html>
