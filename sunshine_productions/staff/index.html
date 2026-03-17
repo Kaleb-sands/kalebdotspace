@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunshine Productions | Staff</title>
+    <link rel="stylesheet" type="text/css" href="../main.css">
+	<link rel="icon" type="image/gif/png" href="../icon1.png">
+</head>
+<script type="text/javascript">
+    function checkPass() {
+    let passcode = document.getElementById("passcode").value;
+
+    // Fetch passwords from the JSON file
+    fetch("password.json")
+        .then(response => response.json())
+        .then(data => {
+            if (data[passcode]) {
+                // Redirect to the correct URL if the password exists
+                document.location = data[passcode];
+            } else {
+                // Show an alert if the password is incorrect
+                alert("Incorrect Password");
+            }
+        })
+        .catch(error => console.error("Error loading passwords:", error));
+}
+</script>
+<body>
+    <nav>
+        <h1 class="nav_title"><a class="nav_title" href="../index.html">Sunshine Productions</a></h1>
+        <ul align="right">
+            <li><a class="Nav" href="../coming_soon/index.html"> Coming Soon |</a></li>
+            <li><a class="Nav" href="../movies/index.html"> Films |</a></li>
+            <li><a class="Nav" href="../about/index.html"> About |</a></li>
+            <li><a class="Nav" href="../contact/index.html"> Contact</a></li>
+        </ul>
+    </nav>
+    <h1 align="center">Staff</h1>
+    <h2 align="center">Please enter your passcode below:</h2>
+    <input id="passcode" placeholder="Passcode">
+    <button class="submit" onclick="checkPass()">Submit</button>
+</body>
+</html>

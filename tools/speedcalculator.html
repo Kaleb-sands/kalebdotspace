@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Area Calculator</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<style>
+    .Nav{
+color: black;
+text-decoration: none;
+display: inline-block;
+font-size: 30px;
+font-family: 'Open Sans';
+padding-left: 10px;
+}
+ul{
+padding: 0;
+margin: 0;
+}
+nav ul li{
+font-size: 30px;
+margin: 8px 6px;
+display: inline-block;
+}
+nav{
+column-count: 1;
+background: rgb(110, 110, 110);
+filter: drop-shadow(0 0 0.2rem rgb(44, 44, 44));
+color: black;
+}
+nav h1{
+margin: 8px 6px;
+}
+body{
+background: rgb(125, 192, 255); 
+margin: 10px;
+padding: 0;
+color: black;
+}
+input[type=text]{
+border-radius: 12px;
+border-style: solid;
+height: 40px;
+width: 200px;
+margin-top: 30px;
+font-family: "Lucida Console", "Courier New", monospace;
+font-size: 20px;    
+text-align: left;
+display: block;
+margin-left: 20px;
+margin-right: auto;
+border-color: black;
+box-sizing: border-box;
+padding-left: 10px;
+}
+button{
+background-color: rgb(190, 190, 190);
+color: black;
+border-radius: 8px;
+font-size: 15px;
+width: 101px;
+height: 45px;
+margin-top: 20px;
+font-family: "Lucida Console", "Courier New", monospace;
+cursor: pointer;
+display: block;
+margin-left: 20px;
+border-style: double;
+border-color: black;
+text-align: center;
+padding-left: 0px;
+padding-right: 0px;
+}
+p{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+</style>
+<script type="text/javascript">
+    function calcspeed(){
+        let t = Math.PI;
+        let diameter = libVal("diameter")
+        let sprocket = libVal("sprocket")
+        let clutch = libVal("clutch")
+        let rpm = libVal("enginerpm")
+        let speedraw = ((rpm / (sprocket / clutch))*(diameter * Math.round(t)) * 60) / 63360
+        let speed = Math.round(speedraw * 100) / 100
+        document.getElementById("answer").value = speed 
+    }
+    function libVal(elementId){
+        return document.getElementById(elementId).value;
+    }
+</script>
+<body>
+    <nav>
+		<h1 class="Nav">Speed Calculator</h1>
+	</nav>
+    <p>Welcome to the Speed Calculator. This calculates the top speed of a vehicle based off of the parameters below. Calculation:</p>
+    <p>RPM of wheel = RPM / ratio of Sprocket to Clutch</p>
+    <p>Inches per minute = RPM of wheel * circumfrence of wheel (diameter * pi)</p>
+    <p>Speed in miles per hour = (Inches per minute * 60 minutes) / Inches in a mile (63360)</p>
+    <p>Start calculating below:</p>
+    <form>
+        <input id="diameter" type="text" placeholder="Wheel Diameter"><br/>
+    </form>
+    <form>
+        <input id="enginerpm" type="text" placeholder="Engine RPM"><br/>
+    </form>
+    <form>
+        <input id="clutch" type="text" placeholder="Clutch Teeth"><br/>
+    </form>
+    <form>
+        <input id="sprocket" type="text" placeholder="Sprocket Teeth"><br/>
+    </form>
+    <button onclick="calcspeed()">Calculate</button>
+    <form>
+        <input id="answer" type="text" placeholder="Miles Per Hour"><br/>
+    </form>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="homepage for young scientist">
+	<title>Redirect Page</title>
+	<link rel="icon" type="image/gif/png" href="icon.png ">
+	<link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+    <style>
+        .Nav{
+	color: black;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 30px;
+	font-family: 'Open Sans';
+	padding-left: 60px;
+}
+ul{
+	padding: 0;
+	margin: 0;
+}
+div ol li:before{
+	content: "Episode ";
+}
+nav ul li{
+	font-size: 30px;
+	margin: 8px 6px;
+	display: inline-block;
+}
+nav{
+	column-count: 2;
+	background: rgb(110, 110, 110);
+	filter: drop-shadow(0 0 0.2rem rgb(0, 0, 0));
+	color: black;
+}
+nav h1{
+	margin: 8px 6px;
+}
+body{
+	background: rgb(125, 192, 255); 
+	margin: 0;
+	padding: 0;
+	color: black;
+}
+input[type=text]{
+    border-radius: 12px;
+    border-style: solid;
+    height: 60px;
+    width: 50%;
+    margin-top: 300px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 25px;
+    text-align: left;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	border-color: black;
+	background-image: url('searchicon.png');
+	background-position: 13px 14px;
+	background-repeat: no-repeat;
+	box-sizing: border-box;
+	padding-left: 55px;
+}
+button{
+    background-color: rgb(190, 190, 190);
+    color: black;
+    border-radius: 8px;
+    font-size: 25px;
+    width: 200px;
+    height: 55px;
+	margin-top: 20px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    cursor: pointer;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	border-style: double;
+	border-color: black;
+}
+.note{
+	display: block;
+	margin-top: 100px;
+	font-family: "Lucida Console", "Courier New", monospace;
+	font-size: 15px;
+
+}
+    </style>
+</head>
+<script type="text/javascript">
+    function redirect(){
+		if (confirm("Are you sure you want to leave this page?")) {
+		document.location= document.getElementById("url").value;}
+    }
+</script>
+<body>
+	<nav>
+		<h1 class="Nav">Redirect Page</h1>
+		<ul align="right">
+		</ul>
+	</nav>
+    <div>
+        <input type="text" id="url" name="url" placeholder="Website Address...">
+        <button onclick="redirect()">Go</button>
+		<p align="center" class="note" >Note: You will need to add https:// to the beginning of the url</p>
+    </div>
+</body>
+</html>

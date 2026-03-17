@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Area Calculator|V1.6</title>
+	<link rel="icon" type="image/gif/png" href="icon3.png">
+	<style type="text/css">
+		button{
+		color: black;
+		border-radius: 12px;
+		background-color: #ff3300;
+		text-decoration: none;
+		height: 20px;
+		transition-duration: 0.4s;
+  		cursor: pointer;
+  		border-style: none;
+  		font-size: 12.5px;
+  		margin-top: 12px;
+  		margin-bottom: 10px;
+	}
+	button:hover {
+  		box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+		span{
+			font-weight: bold;
+		}
+		body{
+			background-color: #82a0a8;
+		}
+		h1{
+			color: #A88287;
+			outline: 5px  solid #1bb8e3;
+		}
+	</style>
+	<script type="text/javascript">
+		function calarea(){
+			let t = Math.PI;
+			let p = libVal("diameter")
+			let area = Math.round((p/2)*(p/2)*t*100)/100
+			document.getElementById("answer").value = area
+		}
+		function libVal(elementId){
+			return document.getElementById(elementId).value;
+		}
+	</script>
+</head>
+<body>
+	<h1>Area Calculator!</h1>
+	<p>To calculate <span>Area</span>, enter the <span>Diameter</span> into the box then click on calculate area</p>
+<form>
+	<input id="diameter" type="text" placeholder="Diameter"><br/>
+</form>
+<button id="areabutton" onclick="calarea()">Calculate area</button>
+<form>
+	<input id="answer" type="text" placeholder="answer">
+</form>
+</body>
+</html>

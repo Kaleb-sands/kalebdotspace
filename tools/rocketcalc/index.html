@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Air Rocket Launch Data Tool</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 600px;
+      background: #fff;
+      padding: 20px;
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      color: #333;
+    }
+    input, button, select {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .test-run {
+      background: #fafafa;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    #stopwatch {
+      font-size: 24px;
+      text-align: center;
+      margin: 10px 0;
+      font-weight: bold;
+      color: #555;
+    }
+    canvas {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Air Rocket Launch Tool</h1>
+
+  <label>Rocket Weight (grams)</label>
+  <input type="number" id="weight" placeholder="e.g., 120">
+
+  <label>Launch Pressure (PSI)</label>
+  <input type="number" id="pressure" placeholder="e.g., 80">
+
+  <label>Launch Pipe Diameter (cm)</label>
+  <input type="number" id="diameter" placeholder="e.g., 2">
+
+  <label>Launch Distance on Pipe (meters)</label>
+  <input type="number" id="launchDistance" placeholder="e.g., 0.5">
+
+  <button id="launchButton">Launch</button>
+  <button id="landButton" disabled>Land</button>
+
+  <div id="stopwatch">0.00 s</div>
+
+  <div>
+    <label>Units:</label>
+    <select id="units">
+      <option value="metric">Meters / m/s</option>
+      <option value="imperial">Feet / mph</option>
+    </select>
+  </div>
+
+  <button id="downloadButton">Download CSV</button>
+  <button id="resetButton">Reset Test Runs</button>
+
+  <h2>Test Runs</h2>
+  <div id="results"></div>
+
+  <canvas id="chart" width="400" height="300"></canvas>
+</div>
+
+<script>
+let startTime = 0;
+let endTime = 0;
+let timerInterval;
+const g = 9.81;
+let testRuns = [];
+let chart;
+
+const launchButton = document.getElementById('launchButton');
+const landButton = document.getElementById('landButton');
+const resultsDiv = document.getElementById('results');
+const stopwatchDisplay = document.getElementById('stopwatch');
+const unitsSelect = document.getElementById('units');
+
+launchButton.addEventListener('click', () => {
+  startTime = Date.now();
+  launchButton.disabled = true;
+  landButton.disabled = false;
+  startStopwatch();
+});
+
+landButton.addEventListener('click', () => {
+  endTime = Date.now();
+  launchButton.disabled = false;
+  landButton.disabled = true;
+  stopStopwatch();
+  processRun();
+});
+
+document.getElementById('downloadButton').addEventListener('click', downloadCSV);
+document.getElementById('resetButton').addEventListener('click', resetRuns);
+
+function startStopwatch() {
+  stopwatchDisplay.textContent = "0.00 s";
+  timerInterval = setInterval(() => {
+    const elapsed = (Date.now() - startTime) / 1000;
+    stopwatchDisplay.textContent = elapsed.toFixed(2) + " s";
+  }, 50);
+}
+
+function stopStopwatch() {
+  clearInterval(timerInterval);
+}
+
+function processRun() {
+  const weight = parseFloat(document.getElementById('weight').value) / 1000;
+  const pressure = parseFloat(document.getElementById('pressure').value) * 6894.76;
+  const diameter = parseFloat(document.getElementById('diameter').value) / 100;
+  const launchDistance = parseFloat(document.getElementById('launchDistance').value);
+
+  const timeSeconds = (endTime - startTime) / 1000;
+  const timeUp = timeSeconds / 2;
+  const height = 0.5 * g * Math.pow(timeUp, 2);
+
+  const area = Math.PI * Math.pow(diameter / 2, 2);
+  const force = pressure * area;
+  const acceleration = force / weight;
+  const velocity = Math.sqrt(2 * acceleration * launchDistance);
+
+  const run = { timeSeconds, height, velocity };
+  testRuns.push(run);
+  displayResults();
+  updateChart();
+}
+
+function displayResults() {
+  resultsDiv.innerHTML = '';
+  testRuns.forEach((run, index) => {
+    const unitType = unitsSelect.value;
+    let height = run.height;
+    let velocity = run.velocity;
+
+    if (unitType === 'imperial') {
+      height = height * 3.28084;
+      velocity = velocity * 2.23694;
+    }
+
+    resultsDiv.innerHTML += `
+      <div class="test-run">
+        <strong>Test ${index + 1}</strong><br>
+        Time: ${run.timeSeconds.toFixed(2)} s<br>
+        Max Height: ${height.toFixed(2)} ${unitType === 'metric' ? 'meters' : 'feet'}<br>
+        Max Speed: ${velocity.toFixed(2)} ${unitType === 'metric' ? 'm/s' : 'mph'}
+      </div>
+    `;
+  });
+}
+
+function downloadCSV() {
+  let csvContent = "data:text/csv;charset=utf-8,Test #,Time (s),Height (m),Speed (m/s)\n";
+  testRuns.forEach((run, i) => {
+    csvContent += `${i + 1},${run.timeSeconds.toFixed(2)},${run.height.toFixed(2)},${run.velocity.toFixed(2)}\n`;
+  });
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "rocket_test_runs.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function resetRuns() {
+  testRuns = [];
+  displayResults();
+  updateChart();
+}
+
+function updateChart() {
+  const ctx = document.getElementById('chart').getContext('2d');
+  const labels = testRuns.map((_, i) => `Test ${i + 1}`);
+  const heights = testRuns.map(run => run.height);
+
+  if (chart) {
+    chart.destroy();
+  }
+
+  chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Max Height (meters)',
+        data: heights,
+        borderColor: 'blue',
+        borderWidth: 2,
+        fill: false
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+unitsSelect.addEventListener('change', displayResults);
+</script>
+
+</body>
+</html>

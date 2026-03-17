@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Madlibs Game</title>
+	<link rel="icon" type="image/gif/png" href="icon3.png">
+	<style>
+	h1{
+		margin-bottom: 0;
+		margin-top: 0;
+		color: blue;
+	}
+	button{
+		color: black;
+		border-radius: 12px;
+		background-color: #ff3300;
+		text-decoration: none;
+		height: 20px;
+		transition-duration: 0.4s;
+  		cursor: pointer;
+  		border-style: none;
+  		font-size: 12.5px;
+  		margin-top: 12px;
+  		margin-bottom: 10px;
+	}
+	button:hover {
+  		box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	body{
+		background-color: #82a0a8;
+	}
+	</style>
+	<script >
+		function fillInMadLib(){
+			var node = document.createElement("p");           
+			var textnode = document.createTextNode(generateMadLib());         
+			node.appendChild(textnode);                              
+			document.getElementById('madLib').appendChild(node);
+			document.getElementById('mainForm').style.display= 'none';
+		}
+
+		function libVal(elementId){
+			return document.getElementById(elementId).value;
+		}
+
+		function generateMadLib(){
+			return "A vacation is when you take a trip to some " + libVal("adjective1") + " place " +
+					"with your " + libVal("adjective2") + " family. Usually you go to some place " +
+					" that is near a/an " + libVal("noun1") + " or up on a/an " + libVal("noun2") + ". " + 
+					"A good vacation place is one where you can ride " + libVal("plural1") + " " + 
+					"or play " + libVal("game1") + " or go hunting for " + libVal("plural2") + " . I like " + 
+					"to spend my time " + libVal("ing1") + " or " + libVal("ing2") + "." + 
+					"When parents go on a vacation, they spend their time eating " + 
+					"three " + libVal("plural3") + " a day, and fathers play golf, and mothers " + 
+					"sit around " + libVal("ing3") + ". Last summer, my little brother " + 
+					"fell in a/an " + libVal("noun3") + " and got poison " + libVal("plant1") + " all " + 
+					"over his " + libVal("body1") + ". My family is going to go to (the)" + 
+					"" + libVal("place1") + ", and I will practice " + libVal("ing4") + ". Parents " + 
+					"need vacations more than kids because parents are always very " + 
+					"" + libVal("adjective3") + " and because they have to work " + libVal("number1") + " " + 
+					"hours every day all year making enough " + libVal("plural4") + " to pay " + 
+					"for the vacation";
+
+		}	
+	</script>
+		
+</head>
+<body>
+	<h1>Mad Lib Game</h1>
+<form id="mainForm">
+	
+	<input id="adjective1" type="text" placeholder="Adjective" /><br/>
+	<input id="adjective2" type="text" placeholder="Adjective" /><br/>
+	<input id="noun1" type="text" placeholder="Noun"/><br/>
+	<input id="noun2" type="text" placeholder="Noun"/><br/>
+	<input id="plural1" type="text" placeholder="Plural Noun"/><br/>
+	<input id="game1" type="text" placeholder="Game"/><br/>
+	<input id="plural2" type="text" placeholder="Plural Noun"/><br/>
+	<input id="ing1" type="text" placeholder="Verb Ending In ing"/><br/>
+	<input id="ing2" type="text" placeholder="Verb Ending In ing"/><br/>
+	<input id="plural3" type="text" placeholder="Plural Noun"/><br/>
+	<input id="ing3" type="text" placeholder="Verb Ending In ing"/><br/>
+	<input id="noun3" type="text" placeholder="Noun"/><br/>
+	<input id="plant1" type="text" placeholder="Plant"/><br/>
+	<input id="body1" type="text" placeholder="Part Of The Body"/><br/>
+	<input id="place1" type="text" placeholder="A Place"/><br/>
+	<input id="ing4" type="text" placeholder="Verb Ending In ing"/><br/>
+	<input id="adjective3" type="text" placeholder="Adjective"/><br/>
+	<input id="number1" type="text" placeholder="Number"/><br/>
+	<input id="plural4" type="text" placeholder="Plural Noun"/><br/>
+</form>
+	<div>
+		<button onclick="fillInMadLib()">generate mad lib</button>
+		<div id="madLib">
+		</div>
+	</div>
+</body>
+</html>

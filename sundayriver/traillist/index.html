@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../SundayRiver.css">
+    <link rel="icon" type="image/gif/png" href="../icon.jpg ">
+    <title>Sunday River Trail Checklist</title>
+    <style>
+        ul{
+            list-style: none;
+            padding: 0;
+        }
+        li{
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        fieldset{
+            border: 1px solid #ccc;
+            margin: 20px 0;
+            padding: 10px;
+        }
+        legend{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="Title">Sunday River Trail Checklist (2024-2025)</h1>
+        <div id="trail-sections">
+            <!-- Trails will be added dynamically -->
+        </div>
+    </div>
+
+    <script>
+        const trailSections = {
+            "White Cap": ["Bear Paw", "Cutback", "Green Cheese", "Moonstruck", "Roadrunner", "Starlight", "Village Trail", 
+                          "Assumption", "Cutoff", "Heat’s Off", "Heat’s On", "Jibe", "Lower Tempest", "Salvation", "Starburst", 
+                          "Wildfire", "Obsession", "Snowbound", "Starstruck", "Starwoof", "Upper Tempest", "Upper Chutzpah", 
+                          "Upper Hard Ball", "Lower Chutzpah", "Lower Hard Ball", "Shockwave", "White Heat"],
+
+            "Locke": ["Cascades", "Goat Path", "Upper Sunday Punch", "Bim’s Whim", "Jim’s Whim", "Locke Line", "Monday Mourning", 
+                      "Poma Road", "T2", "Tightwire", "Uppercut"],
+
+            "Barker": ["Three Mile Trail", "Ecstasy", "Jungle Road", "Lazy River", "Lower Upper Cut", "Rocking Chair", "Sluice", 
+                       "Southpaw", "Sunday Punch", "Tourist Trap", "Last Tango", "Right Stuff", "Agony", "Hollywood", "Top Gun"],
+
+            "South Ridge": ["Broadway", "Double Dipper", "Easy Street", "Lower Chondi Line", "Lower Lazy River", "Mixing Bowl", 
+                            "Northway", "Ridge Express", "Ridge Run", "Second Thoughts", "Spectator", "Sundance", "Outta Here"],
+
+            "Merrill Hill": ["Brilliant", "Double Refraction", "Spectra", "Prism"],
+
+            "Spruce Peak": ["Aludra", "Lights Out", "Sirius", "Thataway", "American Express", "Exit Left", "Lower Risky Business", 
+                            "Overdraft", "Upper Risky Business", "Downdraft", "Gnarnia"],
+
+            "North Peak": ["Backside", "Broadway Connection", "Dream Maker", "Exit Right", "Polaris", "Second Mile", "Ski Back", 
+                           "3D", "Absolutely", "Enchanted Forest", "Escapade", "Grand Rapids", "Last Mile", "Lower Downdraft", 
+                           "Peak Easy", "T72", "Upper Chondi Line", "Yetiville", "Lower North Woods", "Northern Exposure", 
+                           "Upper North Woods"],
+
+            "Aurora Peak": ["Borealis", "Sensation", "Northern Lights", "Paradigm", "Witch Way", "Lower Airglow", "Black Hole", 
+                            "Celestial", "Quantum Leap", "Super Nova", "Upper Airglow", "Lower Vortex", "Upper Vortex"],
+
+            "OZ": ["Cowardly Lion", "Cyclone", "State Fair", "Emerald City", "Eureka", "Flying Monkey", "Lost Princess", 
+                   "Poppy Fields", "Ruby Palace", "Tin Woodsman"],
+
+            "Jordan Bowl": ["Boots Off", "Boots On", "Grand Avenue", "Kansas", "Lollapalooza", "Roundabout", "Excalibur", 
+                            "Firestar", "Rogue Angel", "Blind Ambition", "Double Blind", "Lower Caramba", "Upper Caramba", 
+                            "Lower Wizard’s Gulch", "Upper Wizard’s Gulch"]
+        };
+
+        const trailContainer = document.getElementById("trail-sections");
+
+        function loadChecklist() {
+            const savedData = document.cookie.replace(/(?:(?:^|.*;\s*)skiTrails\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+            const checkedTrails = savedData ? JSON.parse(savedData) : {};
+
+            for (const [section, trails] of Object.entries(trailSections)) {
+                const fieldset = document.createElement("fieldset");
+                const legend = document.createElement("legend");
+                legend.textContent = section;
+                fieldset.appendChild(legend);
+
+                const ul = document.createElement("ul");
+
+                trails.forEach(trail => {
+                    const li = document.createElement("li");
+                    const label = document.createElement("label");
+                    const checkbox = document.createElement("input");
+
+                    checkbox.type = "checkbox";
+                    checkbox.checked = checkedTrails[trail] || false;
+                    checkbox.addEventListener("change", () => saveChecklist());
+
+                    label.appendChild(checkbox);
+                    label.appendChild(document.createTextNode(" " + trail));
+                    li.appendChild(label);
+                    ul.appendChild(li);
+                });
+
+                fieldset.appendChild(ul);
+                trailContainer.appendChild(fieldset);
+            }
+        }
+
+        function saveChecklist() {
+            const checkboxes = document.querySelectorAll("#trail-sections input");
+            const checkedTrails = {};
+
+            Object.values(trailSections).flat().forEach((trail, index) => {
+                checkedTrails[trail] = checkboxes[index].checked;
+            });
+
+            document.cookie = "skiTrails=" + JSON.stringify(checkedTrails) + "; path=/";
+        }
+
+        loadChecklist();
+    </script>
+</body>
+</html>

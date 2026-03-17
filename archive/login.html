@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		Login Page
+	</title>
+	<link rel="icon" type="image/gif/png" href="hacker.png ">
+	<style type="text/css">
+	body{
+		background-color: #fcad03;
+		color: black;
+		margin: 0;
+		padding: 0;
+	}
+	.Nav{
+		background: #2298f2;
+		display: inline-block;
+		font-size: 30px;
+	}
+	nav{
+		background: #2298f2;
+		column-count: 2;
+	}
+	nav h1{
+		margin: 8px 6px;
+	}
+	nav ul li{
+	font-size: 30px;
+
+	display: inline-block;
+	}
+	button{
+	color: black;
+	border-radius: 12px;
+	background-color: #ff3300;
+	text-decoration: none;
+	height: 20px;
+	transition-duration: 0.4s;
+  	cursor: pointer;
+  	border-style: none;
+  	font-size: 15px;
+  	margin-top: 12px;
+  	margin-bottom: 10px;
+}
+.secret{
+	visibility: hidden;
+}
+p{
+	margin-bottom: 0px;
+}
+.psw{
+	visibility: hidden;
+}
+</style>
+<script type="text/javascript">
+	function showsecret(){
+		if (document.getElementById("x").value == "Christmas"){
+			//document.getElementById("secretbutton").style.visibility = "visible";
+			window.location.href = "http://kaleb.space/5870380987603987.html";}
+			else{alert('Wrong password, Please Try Again')}
+		}
+</script>
+<script type="text/javascript">
+	function password() {
+		document.getElementById("x").style.visibility = "visible";}
+</script>
+</head>
+<body>
+	<nav align="left">
+		<h1 class="Nav" >Login</h1>
+	</nav>
+	<p>Welcome to the login page</p>
+	<button type="button" onclick="alert('Maybe put in the password?')">Click for a message</button>
+	<div>
+		<input type="text" id="ema" name="ema" placeholder="Email" onchange="password();">
+	</div>
+	<div>
+		<input class="psw" type="text" id="x" name="x" placeholder="Password" onchange="showsecret();">
+	</div>
+	<button id="secretbutton" class="secret">go</button>
+</body>
+</html>
